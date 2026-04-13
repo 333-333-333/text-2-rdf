@@ -26,14 +26,7 @@ COPY api/ /app/api/
 
 # Pre-download wikimapper DB (py-amr2fred needs it)
 # This is ~832MB compressed, triggers on first use
-RUN python -c "
-import sys
-sys.path.insert(0, '/app/src')
-from text2rdf import load_models
-print('Loading models to trigger wikimapper download...')
-load_models('turtle')
-print('Models loaded successfully.')
-"
+RUN python -c "import sys; sys.path.insert(0, '/app/src'); from text2rdf import load_models; print('Loading models to trigger wikimapper download...'); load_models('turtle'); print('Models loaded successfully.')"
 
 EXPOSE 8000
 
