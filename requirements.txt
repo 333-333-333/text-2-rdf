@@ -1,0 +1,27 @@
+# ── Python 3.11+ requerido ──────────────────────────────────────
+
+# Parser AMR (texto → grafo AMR)
+amrlib>=0.8.0
+
+# Dependencias de amrlib
+penman>=1.1.0          # formato de serialización de grafos AMR
+torch>=1.6             # CPU es suficiente para inferencia
+transformers>=4.16     # modelos BART/T5 fine-tuneados para AMR
+spacy>=3.0             # tokenización y sentence splitting
+numpy
+
+# Conversión AMR → RDF/OWL
+py-amr2fred>=0.2.3
+
+# Dependencias de py-amr2fred (se instalan automáticamente,
+# pero conviene fijar versiones)
+rdflib>=7.1.1
+nltk>=3.9.1
+SPARQLWrapper>=2.0.0
+wikimapper>=0.2.0
+tqdm>=4.67.1
+requests>=2.32.3
+Unidecode>=1.3.8
+
+# Opcional: visualización de grafos AMR como PNG/SVG
+# graphviz                # requiere también `brew install graphviz` o `apt install graphviz`

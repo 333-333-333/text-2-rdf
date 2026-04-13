@@ -1,0 +1,314 @@
+@prefix ns1: <https://w3id.org/framester/data/propbank-3.4.0/LocalRole/> .
+@prefix ns2: <https://w3id.org/framester/schema/> .
+@prefix ns3: <https://w3id.org/framester/amrb/> .
+@prefix ns4: <https://w3id.org/framester/amr/> .
+@prefix ns5: <http://www.ontologydesignpatterns.org/ont/vn/abox/role/vnrole.owl#> .
+@prefix ns6: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+@prefix ns7: <http://www.ontologydesignpatterns.org/ont/fred/quantifiers.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns6:hasDataValue a owl:DatatypeProperty .
+
+ns6:hasMember a owl:ObjectProperty .
+
+ns6:hasQuality a owl:ObjectProperty .
+
+ns6:precedes a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#cause_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/cause-01> ;
+    ns1:cause-01.forcer <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#anemic_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#receive_1> ;
+    ns1:cause-01.impelled-action <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#become_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#die_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#cause_2> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/cause-01> ;
+    ns1:cause-01.forcer <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#expose_1> ;
+    ns1:cause-01.impelled-action <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#anemic_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#have-rel-role_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/have-rel-role-91> ;
+    ns1:have-rel-role-91.entity-a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1> ;
+    ns1:have-rel-role-91.entity-b <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1> ;
+    ns1:have-rel-role-91.role-of-entity-a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#husband_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#include_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/include-91> ;
+    ns1:include-91.subset <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#conjunct_1> ;
+    ns1:include-91.superset <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#element_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#prolong_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/prolong-01> ;
+    ns6:precedes <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#die_1> ;
+    ns1:prolong-01.thing-getting-longer <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#expose_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#significant_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/significant-02> ;
+    ns6:precedes <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#contribute_1> ;
+    ns1:significant-02.thing-that-is-notable <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#contribute_1> .
+
+ns7:hasQuantifier a owl:ObjectProperty .
+
+ns5:Location a owl:ObjectProperty .
+
+ns5:Time a owl:ObjectProperty .
+
+schema:name a owl:ObjectProperty .
+
+ns4:amr a owl:ObjectProperty .
+
+ns4:ord a owl:ObjectProperty .
+
+ns3:year a owl:ObjectProperty .
+
+ns1:bear-02.child a owl:ObjectProperty .
+
+ns1:become-01.entity-changing a owl:ObjectProperty .
+
+ns1:become-01.new-state a owl:ObjectProperty .
+
+ns1:cause-01.forcer a owl:ObjectProperty .
+
+ns1:cause-01.impelled-action a owl:ObjectProperty .
+
+ns1:contribute-01.entity-given-to a owl:ObjectProperty .
+
+ns1:contribute-01.giver a owl:ObjectProperty .
+
+ns1:develop-02.thing-created a owl:ObjectProperty .
+
+ns1:die-01.the-deceased a owl:ObjectProperty .
+
+ns1:discover-01.finder a owl:ObjectProperty .
+
+ns1:discover-01.thing-found a owl:ObjectProperty .
+
+ns1:expose-01.exposed-to a owl:ObjectProperty .
+
+ns1:have-rel-role-91.entity-a a owl:ObjectProperty .
+
+ns1:have-rel-role-91.entity-b a owl:ObjectProperty .
+
+ns1:have-rel-role-91.role-of-entity-a a owl:ObjectProperty .
+
+ns1:include-91.subset a owl:ObjectProperty .
+
+ns1:include-91.superset a owl:ObjectProperty .
+
+ns1:prolong-01.thing-getting-longer a owl:ObjectProperty .
+
+ns1:receive-01.receiver a owl:ObjectProperty .
+
+ns1:receive-01.thing-gotten a owl:ObjectProperty .
+
+ns1:research-01.student a owl:ObjectProperty .
+
+ns1:significant-02.thing-that-is-notable a owl:ObjectProperty .
+
+ns1:study-01.student a owl:ObjectProperty .
+
+ns1:study-01.subject a owl:ObjectProperty .
+
+ns1:treat-03.illness-or-injury a owl:ObjectProperty .
+
+ns1:win-01.contest a owl:ObjectProperty .
+
+ns1:win-01.loser a owl:ObjectProperty .
+
+ns1:win-01.prize a owl:ObjectProperty .
+
+ns1:win-01.winner a owl:ObjectProperty .
+
+ns2:subsumedUnder a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#bear_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/bear-02> ;
+    ns5:Location <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#city_1> ;
+    ns5:Time <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#date-entity_1> ;
+    ns4:amr <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#bear_1> ;
+    ns1:bear-02.child <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#become_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/become-01> ;
+    ns1:become-01.entity-changing <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1> ;
+    ns1:become-01.new-state <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#chemistry_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Chemistry> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#city_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#City> ;
+    schema:name "Warsaw"^^xsd:string .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#develop_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/develop-02> ;
+    ns1:develop-02.thing-created <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#treat_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#discover_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/discover-01> ;
+    ns4:amr <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#discover_1> ;
+    ns1:discover-01.finder <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1> ;
+    ns1:discover-01.thing-found <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#element_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#disease_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Disease> ;
+    schema:name "cancer"^^xsd:string .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#husband_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Husband> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#ordinal-entity_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Ordinal-entity> ;
+    ns6:hasDataValue 2.0 .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#ordinal-entity_2> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Ordinal-entity> ;
+    ns6:hasDataValue 1.0 .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#physics_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Physics> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#plastic_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Plastic> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#polonium_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Polonium> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#radiate_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/radiate-01> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#radioactive_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Radioactive> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#radium_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Radium> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#research_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/research-01> ;
+    ns1:research-01.student <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#study_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/study-01> ;
+    ns5:Location <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#university_1> ;
+    ns4:amr <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#study_1> ;
+    ns1:study-01.student <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1> ;
+    ns1:study-01.subject <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#conjunct_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#treat_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/treat-03> ;
+    ns1:treat-03.illness-or-injury <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#disease_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#university_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#University> ;
+    schema:name "University_of_Paris"^^xsd:string .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#win_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/win-01> ;
+    ns6:hasDataValue 2.0 ;
+    ns7:hasQuantifier ns7:multiple ;
+    ns5:Time <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#date-entity_1> ;
+    ns4:amr <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#win_1> ;
+    ns1:win-01.contest <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#award_1> ;
+    ns1:win-01.loser <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#conjunct_1> ;
+    ns1:win-01.prize <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#award_1> ;
+    ns1:win-01.winner <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/bear-02> rdfs:label "bear children"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0038f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/become-01> rdfs:label "change of state"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0016f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/contribute-01> rdfs:label "give"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0496f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/develop-02> rdfs:label "create, having been intentionally grown, built up"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0382f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/die-01> rdfs:label "sterben"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0062f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/discover-01> rdfs:label "find (out)"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0033f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/expose-01> rdfs:label "cause to be visible"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0162f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/have-rel-role-91> rdfs:subClassOf ns6:Event .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/include-91> rdfs:subClassOf ns6:Event .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/prolong-01> rdfs:label "make longer, making longer in time"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0167f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/radiate-01> rdfs:label "emit or project"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0059f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/receive-01> rdfs:label "get, coming to possess/become acquainted with"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0186f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/research-01> rdfs:label "study very hard"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0197f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/significant-02> rdfs:label "notable in size or importance"^^xsd:string ;
+    rdfs:subClassOf ns6:Event .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/study-01> rdfs:label "examine closely"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0176f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/treat-03> rdfs:label "medical treatment"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0198f> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/win-01> rdfs:label "win, win a prize/contest"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0081f> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#anemic_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Anemic> ;
+    ns6:hasQuality <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#plastic_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#element_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Element> ;
+    ns6:hasDataValue 2.0 ;
+    ns6:hasQuality <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#radioactive_1> ;
+    ns7:hasQuantifier ns7:multiple .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#expose_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/expose-01> ;
+    ns1:expose-01.exposed-to <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#radiate_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#receive_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/receive-01> ;
+    ns5:Time <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#date-entity_1> ;
+    ns4:amr <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#receive_1> ;
+    ns1:receive-01.receiver <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1> ;
+    ns1:receive-01.thing-gotten <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#award_1> .
+
+<https://w3id.org/framester/data/propbank-3.4.0/RoleSet/cause-01> rdfs:label "impelled action"^^xsd:string ;
+    rdfs:subClassOf ns6:Event ;
+    ns2:subsumedUnder <http://verbatlas.org/0619f> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#award_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Award> ;
+    schema:name "Nobel_Prize_in_Chemistry"^^xsd:string,
+        "Nobel_Prize_in_Physics"^^xsd:string ;
+    ns4:ord <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#ordinal-entity_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#conjunct_1> a <http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#Conjunct> ;
+    ns6:hasMember <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#chemistry_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#physics_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#polonium_1>,
+        <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#radium_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#contribute_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/contribute-01> ;
+    ns4:amr <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#contribute_1> ;
+    ns1:contribute-01.entity-given-to <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#develop_1> ;
+    ns1:contribute-01.giver <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#research_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#die_1> a <https://w3id.org/framester/data/propbank-3.4.0/RoleSet/die-01> ;
+    ns5:Time <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#date-entity_1> ;
+    ns4:amr <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#die_1> ;
+    ns1:die-01.the-deceased <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#date-entity_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Date-entity> ;
+    ns3:year 1867.0,
+        1903.0,
+        1911.0,
+        1934.0 .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#female_1> a <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Female> .
+
+<http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1> a ns6:Person ;
+    schema:name "Curie"^^xsd:string,
+        "Marie_Curie"^^xsd:string,
+        "Pierre_Curie"^^xsd:string ;
+    ns4:ord <http://www.ontologydesignpatterns.org/ont/fred/domain.owl#ordinal-entity_2> .
+

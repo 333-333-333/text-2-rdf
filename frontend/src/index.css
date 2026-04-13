@@ -1,0 +1,54 @@
+/* === Global Reset & Base === */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Catppuccin-inspired dark palette */
+  --c-base: #1e1e2e;
+  --c-mantle: #181825;
+  --c-crust: #11111b;
+  --c-surface0: #313244;
+  --c-surface1: #45475a;
+  --c-surface2: #585b70;
+  --c-text: #cdd6f4;
+  --c-subtext: #a6adc8;
+  --c-overlay: #6c7086;
+  --c-blue: #89b4fa;
+  --c-green: #a6e3a1;
+  --c-red: #f38ba8;
+  --c-yellow: #f9e2af;
+  --c-mauve: #cba6f7;
+  --c-lavender: #b4befe;
+  --c-teal: #94e2d5;
+
+  --radius: 8px;
+  --radius-sm: 4px;
+  --transition: 0.2s ease;
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--c-text);
+  background: var(--c-base);
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background: var(--c-base);
+}
+
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
