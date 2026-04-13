@@ -1,169 +1,133 @@
-# text-2-rdf
+# PRISMO — text-2-rdf
 
-Pipeline local para la extracción automática de conocimiento estructurado a partir de texto en lenguaje natural, produciendo grafos de conocimiento RDF/OWL compatibles con los estándares de la Semantic Web.
+Pipeline para la extracción automática de conocimiento estructurado a partir de texto en lenguaje natural, produciendo grafos de conocimiento RDF/OWL compatibles con los estándares de la Semantic Web.
 
-## Fundamentos teóricos
+Incluye una **API HTTP** (FastAPI) y un **frontend web** (React) para convertir texto a ontologías RDF y visualizarlas interactivamente.
 
-### Abstract Meaning Representation (AMR)
+## Quickstart con Docker
 
-AMR es un formalismo de representación semántica que codifica el significado de una oración como un grafo dirigido y acíclico (DAG), de naturaleza agnóstica respecto a la sintaxis superficial. Los nodos representan conceptos (instancias de predicados o entidades) y los arcos representan relaciones semánticas entre ellos, expresadas mediante roles del esquema PropBank.
-
-Una propiedad central de AMR es su invarianza ante transformaciones sintácticas: oraciones en voz activa, pasiva o nominalizaciones del mismo evento producen representaciones isomorfas. Esto la convierte en una representación adecuada como paso intermedio hacia la formalización semántica.
-
-### FRED y los Ontology Design Patterns
-
-FRED (*Formal Reading for the Semantic Web*) es un método de machine reading que transforma grafos AMR en grafos RDF/OWL mediante la aplicación sistemática de Ontology Design Patterns (ODP). El proceso sigue la semántica formal de la Discourse Representation Theory (DRT) y el modelo neo-davidsoniano de eventos, enriqueciendo las instancias extraídas con vínculos a recursos léxicos y ontológicos externos:
-
-- **PropBank** — frames de eventos y asignación de roles semánticos (ARG0, ARG1, …)
-- **FrameNet / VerbAtlas** — semántica léxica basada en marcos
-- **WordNet** — desambiguación del sentido de las palabras (WSD)
-- **DUL (DOLCE+DnS Ultralite)** — ontología de alto nivel para la representación de eventos, roles y participantes
-- **Wikidata / DBpedia** — resolución de entidades nombradas a URIs canónicas
-
-El resultado es un grafo OWL-compliant, consultable mediante SPARQL y alineado con los principios de Linked Open Data.
-
-## Arquitectura del pipeline
-
-```
-Texto en lenguaje natural
-        │
-        ▼
-┌───────────────────┐
-│  Sentence Split   │  spaCy — parser estadístico
-└───────────────────┘
-        │  Lista de oraciones
-        ▼
-┌───────────────────┐
-│   AMR Parsing     │  BART fine-tuneado (amrlib)
-│   texto → AMR     │  Transformer seq2seq supervisado
-└───────────────────┘
-        │  Grafos AMR en notación PENMAN
-        ▼
-┌───────────────────┐
-│  AMR → RDF/OWL    │  py-amr2fred
-│  (semántica FRED) │  Reglas formales + ODPs + WSD
-└───────────────────┘
-        │  Triples RDF
-        ▼
-┌───────────────────┐
-│  Serialización    │  rdflib
-│  Turtle / OWL-XML │
-└───────────────────┘
-        │
-        ▼
-  output.rdf / .ttl
+```bash
+docker compose up --build
 ```
 
-## Naturaleza de los componentes
+- **Frontend**: http://localhost/prismo
+- **API**: http://localhost:8080/v1/to-rdf
+- **API docs**: http://localhost:8080/docs
+- **Health**: http://localhost:8080/health
 
-Este pipeline **no emplea modelos de lenguaje de gran escala (LLMs) de propósito general**. Todos los componentes son sistemas NLP de propósito específico con comportamiento determinista.
+> El primer build tarda 10-30 min (descarga y compila modelos de ML ~4 GB). Las siguientes veces usan cache de Docker.
 
-| Componente | Modelo | Naturaleza |
+## Uso de la API
+
+```bash
+curl -X POST http://localhost:8080/v1/to-rdf \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Mary runs to the store.", "format": "turtle", "level": 3}'
+```
+
+**Parámetros:**
+
+| Campo | Tipo | Default | Descripción |
+|---|---|---|---|
+| `text` | string (requerido, max 5000 chars) | — | Texto a convertir |
+| `format` | `"turtle"` \| `"xml"` \| `"n3"` \| `"nt"` | `"turtle"` | Formato de serialización RDF |
+| `level` | `1` \| `2` \| `3` | `3` | Nivel de complejidad (1=simple, 2=intermedio, 3=completo) |
+
+## Arquitectura
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   Docker Compose                     │
+│                                                      │
+│  ┌──────────────┐       ┌────────────────────────┐   │
+│  │   Frontend   │       │         API            │   │
+│  │  React+Vite  │──/v1──│  FastAPI + uvicorn     │   │
+│  │  Nginx :80   │       │  :8000                 │   │
+│  │              │       │                        │   │
+│  │ /prismo      │       │  ┌──────────────────┐  │   │
+│  │  - Form      │       │  │ PipelineService  │  │   │
+│  │  - Graph     │       │  │ (thread-safe)    │  │   │
+│  └──────────────┘       │  └────────┬─────────┘  │   │
+│                          │           │            │   │
+│                          │  ┌────────▼─────────┐  │   │
+│                          │  │  text2rdf.py     │  │   │
+│                          │  │  Text→AMR→RDF    │  │   │
+│                          │  └──────────────────┘  │   │
+│                          └────────────────────────┘   │
+└─────────────────────────────────────────────────────┘
+```
+
+### Pipeline interno
+
+```
+Texto → spaCy (split) → BART (AMR) → py-amr2fred (RDF/OWL) → rdflib (serialize)
+```
+
+| Componente | Tecnología | Naturaleza |
 |---|---|---|
-| Sentence splitting | spaCy `en_core_web_sm` | Parser estadístico basado en reglas y perceptrón (~12 MB) |
-| Texto → AMR | BART fine-tuneado (amrlib) | Transformer seq2seq supervisado, especializado exclusivamente en AMR parsing |
-| AMR → RDF/OWL | py-amr2fred | Pipeline determinista: mapeo por reglas formales sobre ODPs y ontologías estándar |
-| Serialización | rdflib | Librería de manipulación de grafos RDF, sin componente de aprendizaje |
+| Sentence splitting | spaCy `en_core_web_sm` | Parser estadístico (~12 MB) |
+| Texto → AMR | BART fine-tuneado (amrlib) | Transformer seq2seq (~558 MB) |
+| AMR → RDF/OWL | py-amr2fred | Pipeline determinista: ODPs + WSD |
+| Serialización | rdflib | Grafo RDF |
 
-### BART como parser AMR
+## Frontend
 
-BART (*Bidirectional and Auto-Regressive Transformer*) es un modelo seq2seq con encoder bidireccional y decoder autoregresivo, publicado por Meta AI en 2019. En su versión base, se pre-entrena sobre texto general mediante denoising: el modelo aprende a reconstruir secuencias corrompidas, adquiriendo representaciones lingüísticas de propósito general.
+La UI en `/prismo` permite:
 
-amrlib aplica fine-tuning supervisado sobre el corpus LDC2020T02 (AMR 3.0), convirtiendo BART en un parser especializado cuya única función es mapear oraciones en inglés a grafos AMR en notación PENMAN. A diferencia de los LLMs generativos, este modelo no genera texto libre ni responde instrucciones: su espacio de salida está restringido a la gramática formal de AMR.
+- Ingresar texto en un formulario
+- Seleccionar formato RDF y nivel de complejidad
+- Visualizar la ontología como un grafo interactivo (zoom, pan, click en nodos)
+- Ver el RDF crudo en formato Turtle
 
-| Dimensión | BART fine-tuneado (AMR parser) | LLM generativo |
-|---|---|---|
-| Tarea | AMR parsing (única) | Instrucción general (abierta) |
-| Tipo de output | Grafo estructurado (PENMAN) | Texto libre |
-| Tamaño | ~400 MB – 1.4 GB | 7 GB – cientos de GB |
-| Entrenamiento | Supervisado con corpus anotado | Pre-entrenamiento masivo + RLHF |
-| Determinismo | Alto | Bajo (temperatura, sampling) |
-| Interpretabilidad | Alta (output formal verificable) | Baja (caja negra) |
+El grafo se renderiza con `react-force-graph-2d` y los nodos se colorean por namespace (FRED, DUL, WordNet, Schema.org, etc.).
 
 ## Stack tecnológico
 
-| Librería | Versión mínima | Rol |
-|---|---|---|
-| `amrlib` | 0.8.0 | AMR parsing |
-| `py-amr2fred` | 0.2.3 | AMR → RDF/OWL |
-| `rdflib` | 7.1.1 | Manipulación y serialización de grafos RDF |
-| `spacy` | 3.0 | Tokenización y sentence splitting |
-| `transformers` | 4.16 | Backend de inferencia para BART |
-| `torch` | 1.6 | Framework de deep learning |
-| `penman` | 1.1.0 | Parsing de grafos AMR en notación PENMAN |
-| `nltk` | 3.9.1 | Recursos léxicos (WordNet) |
+**Backend:** Python 3.13, FastAPI, uvicorn, amrlib, py-amr2fred, rdflib, spaCy, PyTorch
 
-## Requisitos del sistema
+**Frontend:** React 19, Vite, react-force-graph-2d, n3.js
 
-- Python 3.11+
-- ~2 GB de espacio en disco (modelo AMR + base de datos wikimapper opcional)
-- CPU suficiente para inferencia (GPU opcional, mejora velocidad)
+**Infra:** Docker, Docker Compose, Nginx
 
-## Instalación
+## Instalación local (sin Docker)
 
-### 1. Entorno virtual
-
-```fish
+```bash
 python3.11 -m venv venv
-source venv/bin/activate.fish
-```
-
-### 2. Dependencias
-
-```fish
+source venv/bin/activate
 pip install -r requirements.txt
+pip install -r api/requirements-api.txt
 python -m spacy download en_core_web_sm
 python -c "import nltk; nltk.download('wordnet'); nltk.download('omw-1.4')"
 ```
 
-### 3. Modelo AMR
+Descargar modelo AMR desde [amrlib-models releases](https://github.com/bjascob/amrlib-models/releases) (`model_parse_xfm_bart_base-v0_1_0`) y ubicarlo en `venv/lib/python3.XX/site-packages/amrlib/data/model_stog`.
 
-Descargar desde [amrlib-models releases](https://github.com/bjascob/amrlib-models/releases):
+Luego correr:
 
-| Modelo | Tamaño | SMATCH |
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+## Niveles de complejidad
+
+| Nivel | Descripción | Triples aproximados |
 |---|---|---|
-| `model_parse_xfm_bart_large-v0_1_0` | 1.4 GB | 83.7 |
-| `model_parse_xfm_bart_base-v0_1_0` | ~400 MB | 82.3 |
-
-```fish
-tar -xzf ~/Downloads/model_parse_xfm_bart_base-v0_1_0.tar.gz \
-    -C venv/lib/python3.XX/site-packages/amrlib/data/
-
-mv venv/lib/python3.XX/site-packages/amrlib/data/model_parse_xfm_bart_base-v0_1_0 \
-   venv/lib/python3.XX/site-packages/amrlib/data/model_stog
-```
-
-> Reemplazar `3.XX` con la versión de Python del entorno (ej. `3.13`).
-
-## Uso
-
-```fish
-# Conversión básica (output: input.rdf)
-python text2rdf.py input.txt
-
-# Output explícito
-python text2rdf.py input.txt output.rdf
-
-# Formato de serialización
-python text2rdf.py input.txt --format xml   # RDF/XML — OWL compatible
-python text2rdf.py input.txt --format n3    # Notation3
-python text2rdf.py input.txt --format nt    # N-Triples
-
-# Sin enriquecimiento Wikidata (omite descarga de ~832 MB)
-python text2rdf.py input.txt --no-postprocess
-```
+| 1 — Simple | Núcleo esencial (DUL + FRED) | ~40% |
+| 2 — Intermedio | Sin VerbAtlas ni Wikidata | ~75% |
+| 3 — Completo | Todos los enriquecimientos | 100% |
 
 ## Formatos de salida
 
-| Flag | Formato | Uso recomendado |
+| Formato | Content-Type | Uso |
 |---|---|---|
-| `turtle` (default) | Turtle | Legibilidad, depuración |
-| `xml` | RDF/XML | Compatibilidad con herramientas OWL (Protégé, HermiT) |
-| `n3` | Notation3 | Interoperabilidad con razonadores N3 |
-| `nt` | N-Triples | Ingesta en triplestores (Apache Jena, Blazegraph) |
+| `turtle` (default) | `text/turtle` | Legibilidad, depuración |
+| `xml` | `application/rdf+xml` | OWL (Protégé, HermiT) |
+| `n3` | `text/n3` | Razonadores N3 |
+| `nt` | `text/plain` | Triplestores (Jena, Blazegraph) |
 
 ## Limitaciones
 
-- El parser AMR está entrenado exclusivamente en inglés (corpus LDC2020T02). Para otros idiomas, py-amr2fred ofrece el parámetro `multilingual=True`, que delega el parsing a la API pública USeA del CNR Italia, requiriendo conectividad de red.
-- La calidad del grafo RDF está acotada por la calidad del AMR generado. Oraciones largas, con sintaxis compleja o jerga técnica pueden producir grafos AMR subóptimos.
-- La resolución de entidades nombradas a URIs de Wikidata/DBpedia requiere la descarga de `index_enwiki-latest.db` (~832 MB comprimido) en la primera ejecución con post-procesamiento habilitado.
+- Parser AMR entrenado en inglés (corpus LDC2020T02)
+- Oraciones largas o con jerga técnica pueden producir grafos subóptimos
+- Los servicios externos (WSD, Framester SPARQL) degradan gracefulmente si no hay red
+- La pipeline no es thread-safe — las requests se serializan con un lock
