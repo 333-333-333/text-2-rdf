@@ -3,7 +3,6 @@ services:
     build:
       context: .
       dockerfile: api/Dockerfile
-    container_name: prismo-api
     ports:
       - "8080:8000"
     environment:
@@ -14,7 +13,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: prismo-frontend
     ports:
       - "80:80"
     volumes:

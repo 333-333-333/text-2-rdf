@@ -7,7 +7,7 @@ Incluye una **API HTTP** (FastAPI) y un **frontend web** (React) para convertir 
 ## Quickstart con Docker
 
 ```bash
-docker compose up --build
+podman compose up --build
 ```
 
 - **Frontend**: http://localhost/prismo
@@ -15,7 +15,7 @@ docker compose up --build
 - **API docs**: http://localhost:8080/docs
 - **Health**: http://localhost:8080/health
 
-> El primer build tarda 10-30 min (descarga y compila modelos de ML ~4 GB). Las siguientes veces usan cache de Docker.
+> El primer build tarda 10-30 min (descarga y compila modelos de ML ~4 GB). Las siguientes veces usan cache de Podman.
 
 ## Uso de la API
 
@@ -37,7 +37,7 @@ curl -X POST http://localhost:8080/v1/to-rdf \
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   Docker Compose                     │
+│                   Podman Compose                     │
 │                                                      │
 │  ┌──────────────┐       ┌────────────────────────┐   │
 │  │   Frontend   │       │         API            │   │
@@ -87,9 +87,9 @@ El grafo se renderiza con `react-force-graph-2d` y los nodos se colorean por nam
 
 **Frontend:** React 19, Vite, react-force-graph-2d, n3.js
 
-**Infra:** Docker, Docker Compose, Nginx
+**Infra:** Podman, Podman Compose, Nginx
 
-## Instalación local (sin Docker)
+## Instalación local (sin Podman)
 
 ```bash
 python3.11 -m venv venv
